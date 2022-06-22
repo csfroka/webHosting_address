@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!-- saved from url=(0135)https://firebasestorage.googleapis.com/v0/b/samboss-reward.appspot.com/o/daum.html?alt=media&token=6b1e1d01-9ecc-4958-a1e0-a33bf0a612b3 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+    </head>
+    <body>
+        <!-- HELLO DAUM! -->
+
+        <!-- iOS&#65533;먯꽌&#65533;&#65533; position:fixed 踰꾧렇媛&#65533; &#65533;덉쓬, &#65533;곸슜&#65533;섎뒗 &#65533;ъ씠&#65533;몄뿉 留욊쾶 position:absolute &#65533;깆쓣 &#65533;댁슜&#65533;섏뿬 top,left媛&#65533; 議곗젙 &#65533;꾩슂 -->
+        <div id="layer" style="display:block;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+
+        </div>
+
+
+        <script src="./daum_files/postcode.v2.js.다운로드"></script>
+        <!-- <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
+        <script>
+
+
+window.addEventListener("message", onReceivedPostMessage, false);
+
+function onReceivedPostMessage(event){
+    //..ex deconstruct event into action & params
+    var action = event.data.action;
+    var params = event.data.params;
+
+    console.log("onReceivedPostMessage "+event);
+
+}
+
+function onReceivedActivityMessageViaJavascriptInterface(json){
+     //..ex deconstruct data into action & params
+     var data = JSON.parse(json);
+     var action = data.action;
+     var params = data.params;
+       console.log("onReceivedActivityMessageViaJavascriptInterface "+event);
+}
+
+
+    // &#65533;고렪踰덊샇 李얘린 &#65533;붾㈃&#65533;&#65533; &#65533;ｌ쓣 element
+    var element_layer = document.getElementById('layer');
+
+    function sample2_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                // 寃&#65533;&#65533;됯껐怨&#65533; &#65533;&#65533;ぉ&#65533;&#65533; &#65533;대┃&#65533;덉쓣&#65533;&#65533; &#65533;ㅽ뻾&#65533;&#65533; 肄붾뱶瑜&#65533; &#65533;묒꽦&#65533;섎뒗 遺&#65533;遺&#65533;.
+
+                // 媛&#65533; 二쇱냼&#65533;&#65533; &#65533;몄텧 洹쒖튃&#65533;&#65533; &#65533;곕씪 二쇱냼瑜&#65533; 議고빀&#65533;쒕떎.
+                // &#65533;대젮&#65533;ㅻ뒗 蹂&#65533;&#65533;섍&#65533; 媛믪씠 &#65533;녿뒗 寃쎌슦&#65533;&#65533; 怨듬갚('')媛믪쓣 媛&#65533;吏&#65533;誘&#65533;濡&#65533;, &#65533;대&#65533; 李멸퀬&#65533;섏뿬 遺꾧린 &#65533;쒕떎.
+                var fullAddr = data.address; // 理쒖쥌 二쇱냼 蹂&#65533;&#65533;&#65533;
+                var extraAddr = ''; // 議고빀&#65533;&#65533; 二쇱냼 蹂&#65533;&#65533;&#65533;
+
+                // 湲곕낯 二쇱냼媛&#65533; &#65533;꾨줈紐&#65533; &#65533;&#65533;&#65533;낆씪&#65533;&#65533; 議고빀&#65533;쒕떎.
+                if(data.addressType === 'R'){
+                    //踰뺤젙&#65533;숇챸&#65533;&#65533; &#65533;덉쓣 寃쎌슦 異붽&#65533;&#65533;쒕떎.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 嫄대Ъ紐낆씠 &#65533;덉쓣 寃쎌슦 異붽&#65533;&#65533;쒕떎.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 議고빀&#65533;뺤＜&#65533;뚯쓽 &#65533;좊Т&#65533;&#65533; &#65533;곕씪 &#65533;묒そ&#65533;&#65533; 愿꾪샇瑜&#65533; 異붽&#65533;&#65533;섏뿬 理쒖쥌 二쇱냼瑜&#65533; 留뚮뱺&#65533;&#65533;.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+
+				var fullRoadAddr = data.roadAddress; // &#65533;꾨줈紐&#65533; 二쇱냼 蹂&#65533;&#65533;&#65533;
+                var extraRoadAddr = ''; // &#65533;꾨줈紐&#65533; 議고빀&#65533;&#65533; 二쇱냼 蹂&#65533;&#65533;&#65533;
+
+                // 踰뺤젙&#65533;숇챸&#65533;&#65533; &#65533;덉쓣 寃쎌슦 異붽&#65533;&#65533;쒕떎. (踰뺤젙由щ뒗 &#65533;쒖쇅)
+                // 踰뺤젙&#65533;숈쓽 寃쎌슦 留덉&#65533;留&#65533; 臾몄옄媛&#65533; "&#65533;&#65533;/濡&#65533;/媛&#65533;"濡&#65533; &#65533;앸궃&#65533;&#65533;.
+                if(data.bname !== '' && /[&#65533;&#65533;|濡&#65533;|媛&#65533;]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+
+                // 嫄대Ъ紐낆씠 &#65533;덇퀬, 怨듬룞二쇳깮&#65533;&#65533; 寃쎌슦 異붽&#65533;&#65533;쒕떎.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+
+                // &#65533;꾨줈紐&#65533;, 吏&#65533;踰&#65533; 議고빀&#65533;&#65533; 二쇱냼媛&#65533; &#65533;덉쓣 寃쎌슦, 愿꾪샇源뚯&#65533; 異붽&#65533;&#65533;&#65533; 理쒖쥌 臾몄옄&#65533;댁쓣 留뚮뱺&#65533;&#65533;.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // &#65533;꾨줈紐&#65533;, 吏&#65533;踰&#65533; 二쇱냼&#65533;&#65533; &#65533;좊Т&#65533;&#65533; &#65533;곕씪 &#65533;대떦 議고빀&#65533;&#65533; 二쇱냼瑜&#65533; 異붽&#65533;&#65533;쒕떎.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+
+				window.Android.processDATA(fullRoadAddr); // data.zonecode + ", " +
+            },
+            width : '100%',
+            height : '100%'
+        }).embed(element_layer);
+
+        // iframe&#65533;&#65533; &#65533;ｌ&#65533; element瑜&#65533; 蹂댁씠寃&#65533; &#65533;쒕떎.
+        element_layer.style.display = 'block';
+
+        // iframe&#65533;&#65533; &#65533;ｌ&#65533; element&#65533;&#65533; &#65533;꾩튂瑜&#65533; &#65533;붾㈃&#65533;&#65533; 媛&#65533;&#65533;대뜲濡&#65533; &#65533;대룞&#65533;쒗궓&#65533;&#65533;.
+        initLayerPosition();
+
+
+    }
+
+    // 釉뚮씪&#65533;곗&#65533;&#65533;&#65533; &#65533;ш린 蹂&#65533;寃쎌뿉 &#65533;곕씪 &#65533;덉씠&#65533;대&#65533; 媛&#65533;&#65533;대뜲濡&#65533; &#65533;대룞&#65533;쒗궎怨좎옄 &#65533;섏떎&#65533;뚯뿉&#65533;&#65533;
+    // resize&#65533;대깽&#65533;몃굹, orientationchange&#65533;대깽&#65533;몃&#65533; &#65533;댁슜&#65533;섏뿬 媛믪씠 蹂&#65533;寃쎈맆&#65533;뚮쭏&#65533;&#65533; &#65533;꾨옒 &#65533;⑥닔瑜&#65533; &#65533;ㅽ뻾 &#65533;쒖폒 二쇱떆嫄곕굹,
+    // 吏곸젒 element_layer&#65533;&#65533; top,left媛믪쓣 &#65533;섏젙&#65533;&#65533; 二쇱떆硫&#65533; &#65533;⑸땲&#65533;&#65533;.
+    function initLayerPosition(){
+        var width = (window.innerWidth || document.documentElement.clientWidth); //&#65533;고렪踰덊샇&#65533;쒕퉬&#65533;ㅺ&#65533; &#65533;ㅼ뼱媛&#65533; element&#65533;&#65533; width
+        var height = (window.innerHeight || document.documentElement.clientHeight); //&#65533;고렪踰덊샇&#65533;쒕퉬&#65533;ㅺ&#65533; &#65533;ㅼ뼱媛&#65533; element&#65533;&#65533; height
+        var borderWidth = 5; //&#65533;섑뵆&#65533;먯꽌 &#65533;ъ슜&#65533;섎뒗 border&#65533;&#65533; &#65533;먭퍡
+
+        // &#65533;꾩뿉&#65533;&#65533; &#65533;좎뼵&#65533;&#65533; 媛믩뱾&#65533;&#65533; &#65533;ㅼ젣 element&#65533;&#65533; &#65533;ｋ뒗&#65533;&#65533;.
+        element_layer.style.width = width + 'px';
+        element_layer.style.height = height + 'px';
+        element_layer.style.border = borderWidth + 'px solid';
+        // &#65533;ㅽ뻾&#65533;섎뒗 &#65533;쒓컙&#65533;&#65533; &#65533;붾㈃ &#65533;덈퉬&#65533;&#65533; &#65533;믪씠 媛믪쓣 媛&#65533;&#65533;몄&#65533;&#65533;&#65533; 以묒븰&#65533;&#65533; &#65533;&#65533; &#65533;&#65533; &#65533;덈룄濡&#65533; &#65533;꾩튂瑜&#65533; 怨꾩궛&#65533;쒕떎.
+        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+    }
+
+</script>
+
+    
+</body></html>
